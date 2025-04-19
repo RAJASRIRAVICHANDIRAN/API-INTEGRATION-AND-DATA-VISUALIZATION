@@ -126,4 +126,51 @@ This Python script demonstrates the power of combining data analysis with automa
 #OUTPUT TASK2
 
 ![Image](https://github.com/user-attachments/assets/f21373c9-ebdb-4afa-9ffd-64c26b5aecd7)
+##TASK3
+
+This Python script creates a simple AI chatbot using Natural Language Processing (NLP), which can respond to user queries in an interactive manner. It leverages the NLTK (Natural Language Toolkit) library, a popular Python library for working with human language data, and specifically uses the nltk.chat.util.Chat class to build the chatbot. The chatbot is capable of recognizing user inputs, matching them with predefined patterns, and generating appropriate responses. This type of chatbot is relatively simple but serves as a great introduction to more advanced chatbot development techniques.
+
+Key Components of the Program
+Libraries Used:
+
+nltk (Natural Language Toolkit): This is a powerful library used for working with text data in Python. It provides easy-to-use interfaces for text processing tasks like tokenization, parsing, and more. In this program, the chatbot utilizes NLTK's Chat class, which helps match user inputs with predefined responses based on regular expressions.
+
+reflections: This is an inbuilt dictionary in nltk.chat.util that reflects pronouns and personal pronouns, like changing "I" to "you" and "me" to "you". It makes the chatbot's responses feel more conversational and natural.
+
+Pattern-Response Matching:
+
+The core of this chatbot's functionality lies in pattern matching. The chatbot uses regular expressions to identify specific phrases in user input. If a user types a greeting like "hi" or "hello", the chatbot responds with a matching phrase like "Hello!" or "Hi there!". Similarly, if the user asks about the chatbot's name, the chatbot has a response like "I'm your friendly chatbot."
+
+The patterns are defined as regular expressions (e.g., r"hi|hello|hey"), and each pattern corresponds to one or more possible responses (e.g., ["Hello!", "Hi there!", "Hey!"]).
+
+Chatbot Structure:
+
+The chatbot is initialized with a list of predefined patterns and responses. The Chat class uses this list to match user inputs with the appropriate responses.
+
+The start_chat function handles the interactive conversation. It keeps asking for user input, processes the query, and provides a response. If the user inputs "quit", the conversation ends, and the chatbot bids farewell.
+
+Interaction and Input:
+
+The chatbot runs in a loop, waiting for the user’s input. Upon receiving user input, the chatbot tries to match it with one of the predefined patterns. If it finds a match, it responds with the corresponding answer.
+
+For instance, if a user says "hello", the chatbot will respond with a greeting, like "Hi there!". If the user says something that doesn’t match any patterns, the chatbot will respond with a default message: "Sorry, I don't understand that."
+
+Ending the Conversation:
+
+To end the conversation, the user simply types "quit" or "exit". The program will break the loop and display a farewell message, indicating the end of the session.
+
+Flow of the Program:
+The script begins by importing the necessary libraries.
+
+It defines a set of patterns and responses, which are matched during the chat.
+
+The start_chat function runs the interactive loop, waiting for user input and providing a response based on the matched pattern.
+
+The chatbot responds with one of the predefined answers or with a default response when no match is found.
+
+The loop continues until the user types "quit" or "exit", at which point the conversation ends.
+
+
+output for task 3:
+![Image](https://github.com/user-attachments/assets/5094e014-3117-40ea-bc1b-ebf17e9215b9)
 
