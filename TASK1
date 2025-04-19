@@ -4,46 +4,38 @@ import seaborn as sns
 from datetime import datetime
 
 
-API_KEY = 'your_openweathermap_api_key'
-CITY = 'London'
-UNITS = 'metric'  
+LATITUDE = 28.61
+LONGITUDE = 77.20
 
-
-def get_weather_data(city, api_key, units='metric'):
-    url = f"http://api.openweathermap.org/data/2.5/forecast?q={city}&appid={api_key}&units={units}"
+def get_weather_data(lat, lon):
+    url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&hourly=temperature_2m"
     response = requests.get(url)
     response.raise_for_status()
     return response.json()
 
-
 def parse_weather_data(data):
-    timestamps = []
-    temperatures = []
-    weather_desc = []
+    times = data['hourly']['time']
+    temps = data['hourly']['temperature_2m']
 
-    for entry in data['list']:
-        timestamps.append(datetime.strptime(entry['dt_txt'], '%Y-%m-%d %H:%M:%S'))
-        temperatures.append(entry['main']['temp'])
-        weather_desc.append(entry['weather'][0]['description'])
+   
+    timestamps = [datetime.fromisoformat(t) for t in times]
+    return timestamps, temps
 
-    return timestamps, temperatures, weather_desc
-
-def plot_weather(timestamps, temperatures, city):
+def plot_weather(timestamps, temperatures, city_name="Delhi"):
     sns.set(style="whitegrid")
-    plt.figure(figsize=(12, 6))
-    sns.lineplot(x=timestamps, y=temperatures, marker="o", color='blue')
-    plt.title(f"Temperature Forecast for {city}", fontsize=16)
+    plt.figure(figsize=(12, 5))
+    sns.lineplot(x=timestamps[:24], y=temperatures[:24], marker='o', color='tomato')  # Plot next 24 hrs
+    plt.title(f"24-Hour Temperature Forecast for {city_name}", fontsize=16)
     plt.xlabel("Time")
     plt.ylabel("Temperature (°C)")
     plt.xticks(rotation=45)
     plt.tight_layout()
     plt.show()
 
-
 if __name__ == "__main__":
     try:
-        raw_data = get_weather_data(CITY, API_KEY, UNITS)
-        times, temps, descriptions = parse_weather_data(raw_data)
-        plot_weather(times, temps, CITY)
+        raw_data = get_weather_data(LATITUDE, LONGITUDE)
+        times, temps = parse_weather_data(raw_data)
+        plot_weather(times, temps, city_name="Delhi")
     except Exception as e:
-        print(f"Error: {e}")
+        print(f" Error occurred: {e}")
