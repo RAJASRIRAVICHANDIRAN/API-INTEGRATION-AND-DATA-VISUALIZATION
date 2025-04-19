@@ -56,3 +56,7 @@ Web Dashboards: The script can be converted into a web-based dashboard using fra
 IoT Systems: Integrating this with IoT devices allows automatic responses based on weather predictions, such as in agriculture or smart home systems.
 
 Data Science Practice: A great starting point for beginners in data science to practice working with external data sources and visual analytics.
+
+#OUTPUT
+
+![Image](https://github.com/user-attachments/assets/b317ff18-188d-4367-be9f-1246c4bb075d)
