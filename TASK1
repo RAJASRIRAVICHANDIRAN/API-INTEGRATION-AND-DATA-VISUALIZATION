@@ -1,0 +1,49 @@
+import requests
+import matplotlib.pyplot as plt
+import seaborn as sns
+from datetime import datetime
+
+
+API_KEY = 'your_openweathermap_api_key'
+CITY = 'London'
+UNITS = 'metric'  
+
+
+def get_weather_data(city, api_key, units='metric'):
+    url = f"http://api.openweathermap.org/data/2.5/forecast?q={city}&appid={api_key}&units={units}"
+    response = requests.get(url)
+    response.raise_for_status()
+    return response.json()
+
+
+def parse_weather_data(data):
+    timestamps = []
+    temperatures = []
+    weather_desc = []
+
+    for entry in data['list']:
+        timestamps.append(datetime.strptime(entry['dt_txt'], '%Y-%m-%d %H:%M:%S'))
+        temperatures.append(entry['main']['temp'])
+        weather_desc.append(entry['weather'][0]['description'])
+
+    return timestamps, temperatures, weather_desc
+
+def plot_weather(timestamps, temperatures, city):
+    sns.set(style="whitegrid")
+    plt.figure(figsize=(12, 6))
+    sns.lineplot(x=timestamps, y=temperatures, marker="o", color='blue')
+    plt.title(f"Temperature Forecast for {city}", fontsize=16)
+    plt.xlabel("Time")
+    plt.ylabel("Temperature (°C)")
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
+
+
+if __name__ == "__main__":
+    try:
+        raw_data = get_weather_data(CITY, API_KEY, UNITS)
+        times, temps, descriptions = parse_weather_data(raw_data)
+        plot_weather(times, temps, CITY)
+    except Exception as e:
+        print(f"Error: {e}")
