@@ -1,0 +1,34 @@
+import nltk
+from nltk.chat.util import Chat, reflections
+
+# Download the punkt tokenizer for sentence processing
+nltk.download('punkt')
+
+# Define chatbot responses and patterns
+patterns_responses = [
+    (r"hi|hello|hey", ["Hello! How can I assist you today?", "Hi there! How can I help?"]),
+    (r"how are you?", ["I'm just a bot, but I'm doing great, thanks for asking!", "I'm functioning well, thank you!"]),
+    (r"what is your name?", ["I'm your chatbot assistant!", "I'm Chatbot, your virtual assistant."]),
+    (r"bye|exit|quit", ["Goodbye! Take care.", "See you later!"]),
+    (r"what can you do?", ["I can answer basic questions and have conversations with you."]),
+    (r"(.*) your favorite color?", ["I don't have a favorite color, but I like all of them!", "Colors are beautiful, aren't they?"]),
+    (r"(.*)", ["Sorry, I didn't understand that. Can you rephrase your question?"]),
+]
+
+# Create the chatbot using the patterns and responses
+chatbot = Chat(patterns_responses, reflections)
+
+# Function to start the chatbot conversation
+def start_chat():
+    print("Hello! I am your chatbot. Type 'quit' to end the conversation.")
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() in ['quit', 'exit', 'bye']:
+            print("Chatbot: Goodbye!")
+            break
+        response = chatbot.respond(user_input)
+        print("Chatbot:", response)
+
+# Start the chatbot
+if __name__ == "__main__":
+    start_chat()
