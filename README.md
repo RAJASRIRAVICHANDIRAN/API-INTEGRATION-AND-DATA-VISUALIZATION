@@ -125,3 +125,5 @@ Any domain where numerical analysis and reporting are essential
 This Python script demonstrates the power of combining data analysis with automation. It is an efficient solution for generating readable and portable reports. By modifying the CSV path or column name, the same code can be reused for various datasets and reporting needs.
 #OUTPUT TASK2
 
+![Image](https://github.com/user-attachments/assets/f21373c9-ebdb-4afa-9ffd-64c26b5aecd7)
+
