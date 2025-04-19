@@ -1,0 +1,71 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, confusion_matrix
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+data = {
+    'Message': [
+        'Free money now!!!',
+        'Hello, how are you?',
+        'Limited time offer, act now!',
+        'Let\'s catch up soon!',
+        'Exclusive offer just for you',
+        'Can we schedule a meeting?',
+        'Urgent, your account has been compromised!',
+        'You won a free ticket, claim now!',
+        'Can you send me the report?',
+        'Amazing deals on new products!',
+    ],
+    'Category': [
+        'spam',   # Spam message
+        'ham',    # Non-spam message
+        'spam',   # Spam message
+        'ham',    # Non-spam message
+        'spam',   # Spam message
+        'ham',    # Non-spam message
+        'spam',   # Spam message
+        'spam',   # Spam message
+        'ham',    # Non-spam message
+        'spam',   # Spam message
+    ]
+}
+
+# Convert into DataFrame
+df = pd.DataFrame(data)
+
+# Show the sample dataset
+print("Sample Dataset:\n", df)
+
+
+vectorizer = CountVectorizer(stop_words='english')
+X = vectorizer.fit_transform(df['Message'])
+
+
+y = df['Category'].map({'ham': 0, 'spam': 1})
+
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+
+model = LogisticRegression(max_iter=1000)
+model.fit(X_train, y_train)
+
+
+y_pred = model.predict(X_test)
+
+
+print("Classification Report:\n", classification_report(y_test, y_pred))
+print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
+
+
+plt.figure(figsize=(8, 6))
+sns.heatmap(confusion_matrix(y_test, y_pred), annot=True, fmt='d', cmap='Blues', cbar=False,
+            xticklabels=['Ham', 'Spam'], yticklabels=['Ham', 'Spam'])
+plt.title("Confusion Matrix")
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+plt.show()
